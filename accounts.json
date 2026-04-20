@@ -1,0 +1,33 @@
+[
+    {
+        "name": "Someone",
+        "username": "test@example.com",
+        "password": "123pswrd",
+        "secret": "YI2MJ2YD7WHW3JJ5WBZDVY4FBSJVLUSG"
+    },
+    {
+        "name": "Abigail",
+        "username": "abi@gmail.com",
+        "password": "4703",
+        "secret": "PCMXHIT4YIECSGJ4WOE4LGRY3FQYFFTJ"
+    },
+    {
+        "name": "Andrés",
+        "username": "andres@gmail.com",
+        "password": "1532",
+        "secret": "MRZXNFPPAD3HQKHJGQAMK4WJDOLV4IVR"
+    },
+    {
+        "name": "Else",
+        "username": "test2@example.com",
+        "password": "123pswrd",
+        "secret": "YY4VBMLQBOMCDUGCEZ7XWTQ5DOULR34E"
+    },
+    {
+        "name": "Lucas",
+        "username": "lukrak69@example.com",
+        "password": "1234",
+        "secret": "HFMQMGIUVAEIWU6UFXD7LEX7JLSKQETA"
+    }
+
+]
