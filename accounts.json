@@ -3,31 +3,69 @@
         "name": "Someone",
         "username": "test@example.com",
         "password": "123pswrd",
-        "secret": "YI2MJ2YD7WHW3JJ5WBZDVY4FBSJVLUSG"
+        "secret": "YI2MJ2YD7WHW3JJ5WBZDVY4FBSJVLUSG",
+        "history": []
     },
     {
         "name": "Abigail",
         "username": "abi@gmail.com",
-        "password": "4703",
-        "secret": "PCMXHIT4YIECSGJ4WOE4LGRY3FQYFFTJ"
+        "password": "1234",
+        "secret": "PCMXHIT4YIECSGJ4WOE4LGRY3FQYFFTJ",
+        "history": [
+            {
+                "id": 1,
+                "type": "compra",
+                "date": "27/08/2024 16:20",
+                "items": [
+                    {
+                        "name": "Pikachu ex",
+                        "qty": 1
+                    },
+                    {
+                        "name": "Sobre Brilliant Stars",
+                        "qty": 4
+                    },
+                    {
+                        "name": "Metapod ex",
+                        "qty": 2
+                    }
+                ],
+                "status": "Enviado"
+            }
+        ]
     },
     {
         "name": "Andrés",
         "username": "andres@gmail.com",
         "password": "1532",
-        "secret": "MRZXNFPPAD3HQKHJGQAMK4WJDOLV4IVR"
+        "secret": "MRZXNFPPAD3HQKHJGQAMK4WJDOLV4IVR",
+        "history": []
     },
     {
         "name": "Else",
         "username": "test2@example.com",
         "password": "123pswrd",
-        "secret": "YY4VBMLQBOMCDUGCEZ7XWTQ5DOULR34E"
+        "secret": "YY4VBMLQBOMCDUGCEZ7XWTQ5DOULR34E",
+        "history": []
     },
     {
         "name": "Lucas",
         "username": "lukrak69@example.com",
         "password": "1234",
-        "secret": "HFMQMGIUVAEIWU6UFXD7LEX7JLSKQETA"
+        "secret": "HFMQMGIUVAEIWU6UFXD7LEX7JLSKQETA",
+        "history": [
+            {
+                "id": 1,
+                "type": "compra",
+                "date": "11/04/2024 11:00",
+                "items": [
+                    {
+                        "name": "Caterpie",
+                        "qty": 3
+                    }
+                ],
+                "status": "Recibido"
+            }
+        ]
     }
-
 ]
