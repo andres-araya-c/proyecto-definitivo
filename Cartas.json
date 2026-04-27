@@ -95,24 +95,5 @@
     { "number": 88, "title": "Air Assault Soldier Rappels From A Chopper",      "subset": "Defending Freedom",       "price_usd": 0.50 },
     { "number": 89, "title": "USS Kitty Hawk Leaves Japanese Waters",           "subset": "Defending Freedom",       "price_usd": 0.50 },
     { "number": 90, "title": "Checklist",                                        "subset": "Checklist",               "price_usd": 0.25 }
-  ],
-  "stickers": [
-    { "number": "1 of 9", "title": "God Bless America",      "price_usd": 1.00 },
-    { "number": "2 of 9", "title": "Home of the Brave",      "price_usd": 1.00 },
-    { "number": "3 of 9", "title": "America the Beautiful",  "price_usd": 1.00 },
-    { "number": "4 of 9", "title": "Proud, Brave and Strong","price_usd": 1.00 },
-    { "number": "5 of 9", "title": "United We Stand",        "price_usd": 1.00 },
-    { "number": "6 of 9", "title": "These Colors Don't Run", "price_usd": 1.00 },
-    { "number": "7 of 9", "title": "Don't Tread on Me",      "price_usd": 1.00 },
-    { "number": "8 of 9", "title": "Old Glory",              "price_usd": 1.00 },
-    { "number": "9 of 9", "title": "Let Freedom Ring",       "price_usd": 1.00 }
-  ],
-  "notable_prices": {
-    "#19_Osama_Bin_Laden": {
-      "raw_NM": 15.00,
-      "PSA_9": 300.00,
-      "PSA_10": 220.00,
-      "source": "PSA Auction Prices Realized 2024-2026"
-    }
-  }
+  ]
 }
