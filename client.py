@@ -2,28 +2,28 @@ import socket
 
 # ── Helpers de comunicación ──────────────────────────────────────────────
 
-def send(sock, msg: str):
+def enviar(sock, msg: str):
     sock.sendall((msg + "\n").encode())
 
-def recv(sock) -> str:
-    data = b""
-    while not data.endswith(b"\n"):
-        chunk = sock.recv(4096)
-        if not chunk:
+def recibir(sock) -> str:
+    datos = b""
+    while not datos.endswith(b"\n"):
+        fragmento = sock.recv(4096)
+        if not fragmento:
             raise ConnectionError("Servidor desconectado.")
-        data += chunk
-    return data.decode().strip()
+        datos += fragmento
+    return datos.decode().strip()
 
-def recv_block(sock) -> str:
-    lines = []
+def recibir_bloque(sock) -> str:
+    lineas = []
     while True:
-        line = recv(sock)
-        if line == "%%END%%":
+        linea = recibir(sock)
+        if linea == "%%FIN%%":
             break
-        lines.append(line)
-    return "\n".join(lines)
+        lineas.append(linea)
+    return "\n".join(lineas)
 
-# ── Autenticación (ahora via socket) ────────────────────────────────────
+# ── Autenticación ────────────────────────────────────────────────────────
 
 def autenticar(sock) -> str:
     """
@@ -34,93 +34,91 @@ def autenticar(sock) -> str:
     print("Para autenticarse ingrese su mail y contraseña:")
 
     while True:
-        username = input("usuario: ").strip()
-        password = input("contraseña: ").strip()
+        usuario = input("usuario: ").strip()
+        contrasena = input("contraseña: ").strip()
 
-        # Enviamos usuario y contraseña al servidor
-        send(sock, f"AUTH {username} {password}")
-        respuesta = recv(sock)
+        enviar(sock, f"AUTH {usuario} {contrasena}")
+        respuesta = recibir(sock)
 
         if respuesta.startswith("AUTH_OK"):
-            # El servidor responde: AUTH_OK <nombre>
             nombre = respuesta.split(" ", 1)[1]
             return nombre
         else:
-            print(f"Asistente: {respuesta}\n")   # ej: "Credenciales inválidas"
+            print(f"Asistente: {respuesta}\n")
 
 # ── Submenús ─────────────────────────────────────────────────────────────
 
-def menu_cambio_clave(sock, username):
+def menu_cambio_clave(sock, usuario):
     nueva = input("Ingrese su nueva contraseña: ")
-    send(sock, f"CHANGE_PASS {nueva}")
-    confirm = input("Ingrese su nueva contraseña nuevamente: ")
-    send(sock, f"CHANGE_PASS_CONFIRM {confirm}")
-    print(f"Asistente: {recv(sock)}")
+    enviar(sock, f"CAMBIAR_CLAVE {nueva}")
+    confirmar = input("Ingrese su nueva contraseña nuevamente: ")
+    enviar(sock, f"CONFIRMAR_CLAVE {confirmar}")
+    print(f"Asistente: {recibir(sock)}")
 
-def menu_historial(sock, username):
-    send(sock, "GET_HISTORY")
-    print(f"Asistente:\n{recv_block(sock)}")
+def menu_historial(sock, usuario):
+    enviar(sock, "VER_HISTORIAL")
+    print(f"Asistente:\n{recibir_bloque(sock)}")
     opcion = input("¿Desea ver más detalles de alguno? (0 = No): ").strip()
-    send(sock, f"HISTORY_DETAIL {opcion}")
+    enviar(sock, f"DETALLE_HISTORIAL {opcion}")
     if opcion != "0":
-        print(f"Asistente:\n{recv_block(sock)}")
+        print(f"Asistente:\n{recibir_bloque(sock)}")
 
-def menu_catalogo(sock, username):
-    send(sock, "GET_CATALOGUE")
-    print(f"Asistente: Catálogo disponible:\n{recv_block(sock)}")
+def menu_catalogo(sock, usuario):
+    enviar(sock, "VER_CATALOGO")
+    print(f"Asistente: Catálogo disponible:\n{recibir_bloque(sock)}")
     producto = input("Ingrese el nombre del producto a comprar (0 = Cancelar): ").strip()
     if producto == "0":
-        send(sock, "BUY_CANCEL")
+        enviar(sock, "COMPRA_CANCELADA")
         return
     cantidad = input("Ingrese la cantidad: ").strip()
-    send(sock, f"BUY {producto} {cantidad}")
-    print(f"Asistente: {recv(sock)}")
+    enviar(sock, f"COMPRAR {producto} {cantidad}")
+    print(f"Asistente: {recibir(sock)}")
 
-def menu_devolucion(sock, username):
-    send(sock, "GET_HISTORY")
-    print(f"Asistente: Sus compras:\n{recv_block(sock)}")
+def menu_devolucion(sock, usuario):
+    enviar(sock, "VER_HISTORIAL")
+    print(f"Asistente: Sus compras:\n{recibir_bloque(sock)}")
     opcion = input("Ingrese el número de operación a devolver (0 = Cancelar): ").strip()
     if opcion == "0":
-        send(sock, "RETURN_CANCEL")
+        enviar(sock, "DEVOLUCION_CANCELADA")
         return
-    send(sock, f"RETURN {opcion}")
-    print(f"Asistente: {recv(sock)}")
+    enviar(sock, f"DEVOLVER {opcion}")
+    print(f"Asistente: {recibir(sock)}")
 
-def menu_confirmar_envio(sock, username):
-    send(sock, "GET_PENDING_SHIPMENTS")
-    print(f"Asistente: Envíos pendientes:\n{recv_block(sock)}")
+def menu_confirmar_envio(sock, usuario):
+    enviar(sock, "VER_ENVIOS_PENDIENTES")
+    print(f"Asistente: Envíos pendientes:\n{recibir_bloque(sock)}")
     opcion = input("Ingrese el número de envío a confirmar (0 = Cancelar): ").strip()
     if opcion == "0":
-        send(sock, "CONFIRM_CANCEL")
+        enviar(sock, "CONFIRMACION_CANCELADA")
         return
-    send(sock, f"CONFIRM_SHIPMENT {opcion}")
-    print(f"Asistente: {recv(sock)}")
+    enviar(sock, f"CONFIRMAR_ENVIO {opcion}")
+    print(f"Asistente: {recibir(sock)}")
 
-def menu_ejecutivo(sock, username):
-    send(sock, "REQUEST_EXECUTIVE")
+def menu_ejecutivo(sock, usuario):
+    enviar(sock, "SOLICITAR_EJECUTIVO")
     print("Asistente: Estás en la cola de espera, aguarda un momento...")
     while True:
-        msg = recv(sock)
-        if msg.startswith("EXEC_CONNECTED"):
-            exec_name = msg.split(" ", 1)[1] if " " in msg else "un ejecutivo"
-            print(f"Asistente: Te atiende {exec_name}.")
+        msg = recibir(sock)
+        if msg.startswith("EJECUTIVO_CONECTADO"):
+            nombre_exec = msg.split(" ", 1)[1] if " " in msg else "un ejecutivo"
+            print(f"Asistente: Te atiende {nombre_exec}.")
             break
         print(f"Asistente: {msg}")
     print("(Escribe tu mensaje. El ejecutivo cerrará la sesión cuando terminen.)")
     while True:
-        msg = recv(sock)
-        if msg == "EXEC_DISCONNECT":
+        msg = recibir(sock)
+        if msg == "EJECUTIVO_DESCONECTADO":
             print("Asistente: El ejecutivo ha finalizado la sesión.")
             break
         print(f"Ejecutivo: {msg}")
-        send(sock, input(f"{username}: ").strip())
+        enviar(sock, input(f"{usuario}: ").strip())
 
 # ── Menú principal ───────────────────────────────────────────────────────
 
-def menu_principal(sock, username):
+def menu_principal(sock, usuario):
     while True:
         print(f"""
-Asistente: ¡Bienvenido {username}! ¿En qué te podemos ayudar?
+Asistente: ¡Bienvenido {usuario}! ¿En qué te podemos ayudar?
 [1] Cambio de contraseña.
 [2] Historial de operaciones.
 [3] Catálogo de productos / Comprar productos.
@@ -131,23 +129,23 @@ Asistente: ¡Bienvenido {username}! ¿En qué te podemos ayudar?
 
         opcion = input("Ingrese un número: ").strip()
 
-        if   opcion == "1": menu_cambio_clave(sock, username)
-        elif opcion == "2": menu_historial(sock, username)
-        elif opcion == "3": menu_catalogo(sock, username)
-        elif opcion == "4": menu_devolucion(sock, username)
-        elif opcion == "5": menu_confirmar_envio(sock, username)
-        elif opcion == "6": menu_ejecutivo(sock, username)
+        if   opcion == "1": menu_cambio_clave(sock, usuario)
+        elif opcion == "2": menu_historial(sock, usuario)
+        elif opcion == "3": menu_catalogo(sock, usuario)
+        elif opcion == "4": menu_devolucion(sock, usuario)
+        elif opcion == "5": menu_confirmar_envio(sock, usuario)
+        elif opcion == "6": menu_ejecutivo(sock, usuario)
         elif opcion == "7":
-            send(sock, "LOGOUT")
+            enviar(sock, "SALIR")
             print("Asistente: ¡Hasta luego!")
             break
         else:
-            print("Asistente: Opción inválida.")
+            print("Asistente: Opción inválida, intente nuevamente.")
             continue
 
         continuar = input("\nAsistente: ¿Desea realizar otra operación? (1=Sí / 0=No): ").strip()
         if continuar == "0":
-            send(sock, "LOGOUT")
+            enviar(sock, "SALIR")
             print("Asistente: ¡Hasta luego!")
             break
 
@@ -155,9 +153,9 @@ Asistente: ¡Bienvenido {username}! ¿En qué te podemos ayudar?
 
 if __name__ == "__main__":
     HOST = "127.0.0.1"
-    PORT = 9000
+    PORT = 8002
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.connect((HOST, PORT))
-        nombre = autenticar(sock)          # 1) Auth via socket
-        menu_principal(sock, nombre)       # 2) Menú de servicios
+        nombre = autenticar(sock)
+        menu_principal(sock, nombre)

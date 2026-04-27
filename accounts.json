@@ -1,36 +1,27 @@
 [
     {
-        "name": "Osama",
-        "username": "binladen@911.com",
-        "password": "akbar",
+        "name": "Someone",
+        "username": "test@example.com",
+        "password": "123pswrd",
         "secret": "YI2MJ2YD7WHW3JJ5WBZDVY4FBSJVLUSG",
-        "history": []
+        "historial": []
     },
-{
+    {
         "name": "Abigail",
         "username": "abi@gmail.com",
-        "password": "1234",
+        "password": "4703",
         "secret": "PCMXHIT4YIECSGJ4WOE4LGRY3FQYFFTJ",
-        "history": [
+        "historial": [
             {
                 "id": 1,
-                "type": "compra",
-                "date": "27/08/2024 16:20",
-                "items": [
-                    {
-                        "name": "Osama Bin Laden: The Suspected Ringleader",
-                        "qty": 911
-                    },
-                    {
-                        "name": "President Bush Addresses Congress",
-                        "qty": 4
-                    },
-                    {
-                        "name": "An Attack On Freedom",
-                        "qty": 2
-                    }
+                "tipo": "compra",
+                "fecha": "27/08/2024 16:20",
+                "articulos": [
+                    {"nombre": "Pikachu ex",            "cantidad": 1},
+                    {"nombre": "Sobre Brilliant Stars", "cantidad": 4},
+                    {"nombre": "Metapod ex",            "cantidad": 2}
                 ],
-                "status": "Enviado"
+                "estado": "Enviado"
             }
         ]
     },
@@ -39,32 +30,29 @@
         "username": "andres@gmail.com",
         "password": "1532",
         "secret": "MRZXNFPPAD3HQKHJGQAMK4WJDOLV4IVR",
-        "history": []
+        "historial": []
     },
     {
         "name": "Else",
         "username": "test2@example.com",
         "password": "123pswrd",
         "secret": "YY4VBMLQBOMCDUGCEZ7XWTQ5DOULR34E",
-        "history": []
+        "historial": []
     },
     {
         "name": "Lucas",
         "username": "lukrak69@example.com",
         "password": "1234",
         "secret": "HFMQMGIUVAEIWU6UFXD7LEX7JLSKQETA",
-        "history": [
+        "historial": [
             {
                 "id": 1,
-                "type": "compra",
-                "date": "02/05/2011 1:00",
-                "items": [
-                    {
-                        "name": "Osama Bin Laden: The Suspected Ringleader",
-                        "qty": 1
-                    }
+                "tipo": "compra",
+                "fecha": "11/04/2024 11:00",
+                "articulos": [
+                    {"nombre": "Caterpie", "cantidad": 3}
                 ],
-                "status": "Recibido"
+                "estado": "Recibido"
             }
         ]
     }
