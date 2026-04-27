@@ -1,11 +1,4 @@
 {
-  "set": "2001 Topps Enduring Freedom",
-  "publisher": "Topps",
-  "year": 2001,
-  "total_cards": 90,
-  "total_stickers": 9,
-  "currency": "USD",
-  "price_note": "Precios estimados de mercado para cartas en condición NM (Near Mint). La carta #19 tiene datos reales de subastas PSA; el resto son estimaciones basadas en el mercado secundario (eBay, 2024-2026).",
   "cards": [
     { "number": 1,  "title": "Enduring Freedom Picture Cards",                    "subset": "Base",                    "price_usd": 0.50 },
     { "number": 2,  "title": "New York Harbor, Before Sept. 11, 2001",            "subset": "September 11, 2001",      "price_usd": 0.75 },
@@ -98,7 +91,7 @@
     { "number": 89, "title": "USS Kitty Hawk Leaves Japanese Waters",           "subset": "Defending Freedom",       "price_usd": 0.50 },
     { "number": 90, "title": "Checklist",          
   ],
-  "stickers": [
+  "Gradeo": [
     { "number": "1 of 9", "title": "God Bless America",      "price_usd": 1.00 },
     { "number": "2 of 9", "title": "Home of the Brave",      "price_usd": 1.00 },
     { "number": "3 of 9", "title": "America the Beautiful",  "price_usd": 1.00 },
