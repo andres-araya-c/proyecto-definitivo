@@ -108,13 +108,6 @@
     { "number": "7 of 9", "title": "Don't Tread on Me",      "price_usd": 1.00 },
     { "number": "8 of 9", "title": "Old Glory",              "price_usd": 1.00 },
     { "number": "9 of 9", "title": "Let Freedom Ring",       "price_usd": 1.00 }
-  ],
-  "notable_prices": {
-    "#19_Osama_Bin_Laden": {
-      "raw_NM": 15.00,
-      "PSA_9": 300.00,
-      "PSA_10": 220.00,
-      "source": "PSA Auction Prices Realized 2024-2026"
-    }
+  ]
   }
 }
