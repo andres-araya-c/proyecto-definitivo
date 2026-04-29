@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Jonas",
+        "username": "jonasbrother@gmail.com",
+        "password": "exec123",
+        "secret": "JBSWY3DPEHPK3PXP"
+    },
+    {
+        "name": "Andrés",
+        "username": "andres@gmail.com",
+        "password": "1532",
+        "secret": "MRZXNFPPAD3HQKHJGQAMK4WJDOLV4IVR"
+    },
+    {
+        "name": "Felipe",
+        "username": "melipefunoz@gmail.com",
+        "password": "exec789",
+        "secret": "JBSWY3DPEHPK3PXR"
+    }
+]

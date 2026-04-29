@@ -6,7 +6,7 @@
         "secret": "YI2MJ2YD7WHW3JJ5WBZDVY4FBSJVLUSG",
         "history": []
     },
-    {
+    
 {
         "name": "Abigail",
         "username": "abi@gmail.com",
@@ -35,13 +35,7 @@
             }
         ]
     },
-    {
-        "name": "Andrés",
-        "username": "andres@gmail.com",
-        "password": "1532",
-        "secret": "MRZXNFPPAD3HQKHJGQAMK4WJDOLV4IVR",
-        "history": []
-    },
+    
     {
         "name": "Else",
         "username": "test2@example.com",
