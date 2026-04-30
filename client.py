@@ -207,7 +207,7 @@ def menu_ejecutivo(sock, usuario):
     while True:
         msg = recibir(sock)
         if msg == "EJECUTIVO_DESCONECTADO":
-            print("Asistente: El ejecutivo ha finalizado la sesión.")
+            print("Asistente: La sesión ha terminado. El ejecutivo ha finalizado la sesión.")
             break
         print(f"Ejecutivo: {msg}")
         enviar(sock, input(f"{usuario}: ").strip())
@@ -242,11 +242,15 @@ Asistente: ¡Bienvenido {usuario}! ¿En qué te podemos ayudar?
             print("Asistente: Opción inválida, intente nuevamente.")
             continue
 
-        continuar = input("\nAsistente: ¿Desea realizar otra operación? (1=Sí / 0=No): ").strip()
-        if continuar == "0":
-            enviar(sock, "SALIR")
-            print("Asistente: ¡Hasta luego!")
-            break
+        while True:
+            continuar = input("\nAsistente: ¿Desea realizar otra operación? (1=Sí / 0=No): ").strip().lower()
+            if continuar in {"0", "no", "n"}:
+                enviar(sock, "SALIR")
+                print("Asistente: ¡Hasta luego!")
+                return
+            if continuar in {"1", "si", "s", "2", "yes", "y"}:
+                break
+            print("Asistente: Opción inválida. Ingrese 1 para Sí o 0 para No.")
 
 # ── Entry point ──────────────────────────────────────────────────────────
 

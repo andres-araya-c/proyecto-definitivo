@@ -165,8 +165,12 @@ def terminal_ejecutivo(sock, nombre):
                 continue
             enviar(sock, "CMD_DESCONECTAR")
             cliente_actual = None
+            print("Asistente: La sesión ha terminado. El ejecutivo ha finalizado la sesión.")
 
-        
+        elif entrada == "":
+            # Ignorar pulsaciones de Enter en blanco.
+            continue
+
         elif cliente_actual and not entrada.startswith(":"):
             enviar(sock, f"CHAT_EJECUTIVO {entrada}")
 

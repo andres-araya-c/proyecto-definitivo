@@ -38,3 +38,53 @@
 [30/04/2026 17:42:38] Confirmación envío Cliente Osama.
 [30/04/2026 17:42:38] Confirmación de envío - Cliente Osama.
 [30/04/2026 17:43:27] Cliente Osama desconectado abruptamente.
+[30/04/2026 18:00:31] Escuchando en 127.0.0.1:8002...
+[30/04/2026 18:02:54] Cliente Abigail conectado.
+[30/04/2026 18:03:30] Cliente Osama conectado.
+[30/04/2026 18:03:43] Cliente Abigail en cola de espera para ejecutivo.
+[30/04/2026 18:03:43] Solicitud de ejecutivo - Cliente Abigail.
+[30/04/2026 18:03:48] Cliente Osama en cola de espera para ejecutivo.
+[30/04/2026 18:03:48] Solicitud de ejecutivo - Cliente Osama.
+[30/04/2026 18:04:47] Ejecutivo Jonas conectado.
+[30/04/2026 18:05:17] Cliente Abigail redirigido a ejecutivo Jonas.
+[30/04/2026 18:05:52] Ejecutivo Andrés conectado.
+[30/04/2026 18:06:24] Cliente Osama redirigido a ejecutivo Andrés.
+[30/04/2026 18:08:17] Ejecutivo Andrés compró osama a Osama por $1.0.
+[30/04/2026 18:09:11] Atendido por ejecutivo - fin de sesión - Cliente Osama.
+[30/04/2026 18:09:54] Ejecutivo Andrés desconectado.
+[30/04/2026 18:15:44] Escuchando en 127.0.0.1:8002...
+[30/04/2026 18:16:21] Cliente Osama conectado.
+[30/04/2026 18:16:27] Cliente Osama en cola de espera para ejecutivo.
+[30/04/2026 18:16:27] Solicitud de ejecutivo - Cliente Osama.
+[30/04/2026 18:17:24] Ejecutivo Andrés conectado.
+[30/04/2026 18:17:52] Cliente Osama redirigido a ejecutivo Andrés.
+[30/04/2026 18:18:01] Atendido por ejecutivo - fin de sesión - Cliente Osama.
+[30/04/2026 18:22:07] Ejecutivo Andrés desconectado abruptamente.
+[30/04/2026 18:22:08] Cliente Osama desconectado abruptamente.
+[30/04/2026 18:22:28] Escuchando en 127.0.0.1:8002...
+[30/04/2026 18:23:31] Cliente Osama conectado.
+[30/04/2026 18:23:43] Cliente Osama en cola de espera para ejecutivo.
+[30/04/2026 18:23:43] Solicitud de ejecutivo - Cliente Osama.
+[30/04/2026 18:24:35] Ejecutivo Andrés conectado.
+[30/04/2026 18:24:41] Cliente Osama redirigido a ejecutivo Andrés.
+[30/04/2026 18:24:48] Atendido por ejecutivo - fin de sesión - Cliente Osama.
+[30/04/2026 18:25:50] Ejecutivo Andrés desconectado abruptamente.
+[30/04/2026 18:26:37] Ejecutivo Andrés conectado.
+[30/04/2026 18:27:37] Escuchando en 127.0.0.1:8002...
+[30/04/2026 18:28:18] Cliente Osama conectado.
+[30/04/2026 18:28:20] Cliente Osama en cola de espera para ejecutivo.
+[30/04/2026 18:28:20] Solicitud de ejecutivo - Cliente Osama.
+[30/04/2026 18:28:37] Ejecutivo Andrés conectado.
+[30/04/2026 18:28:41] Cliente Osama redirigido a ejecutivo Andrés.
+[30/04/2026 18:29:05] Atendido por ejecutivo - fin de sesión - Cliente Osama.
+[30/04/2026 18:29:59] Ejecutivo Andrés desconectado abruptamente.
+[30/04/2026 18:33:31] Cliente Osama desconectado abruptamente.
+[30/04/2026 18:33:53] Cliente Osama conectado.
+[30/04/2026 18:33:56] Consulta de historial - Cliente Osama.
+[30/04/2026 18:34:08] Cliente Osama en cola de espera para ejecutivo.
+[30/04/2026 18:34:08] Solicitud de ejecutivo - Cliente Osama.
+[30/04/2026 18:34:48] Ejecutivo Andrés conectado.
+[30/04/2026 18:34:53] Cliente Osama redirigido a ejecutivo Andrés.
+[30/04/2026 18:35:09] Atendido por ejecutivo - fin de sesión - Cliente Osama.
+[30/04/2026 18:35:20] Consulta de historial - Cliente Osama.
+[30/04/2026 18:35:27] Cliente Osama desconectado.

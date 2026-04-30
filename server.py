@@ -378,10 +378,15 @@ def manejar_chat_con_ejecutivo(conn_cliente, conn_ejecutivo, cuenta_cliente, nom
     # El hilo actual escucha al ejecutivo y reenvía al cliente
     while not fin_chat.is_set():
         try:
-            msg = recibir(conn_ejecutivo)
+            msg = recibir(conn_ejecutivo).strip()
+
+            if not msg:
+                # Ignorar líneas en blanco del ejecutivo.
+                continue
 
             if msg == "CMD_DESCONECTAR":
                 enviar(conn_cliente, "EJECUTIVO_DESCONECTADO")
+                enviar(conn_cliente, "Asistente: La sesión ha terminado. El ejecutivo ha finalizado la sesión.")
                 fin_chat.set()
                 break
 

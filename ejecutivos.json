@@ -2,7 +2,7 @@
     {
         "name": "Jonas",
         "username": "jonas@gmail.com",
-        "password": "exec123",
+        "password": "1234",
         "secret": "JBSWY3DPEHPK3PXP"
     },
     {
@@ -13,8 +13,8 @@
     },
     {
         "name": "Felipe",
-        "username": "melipefunoz@gmail.com",
-        "password": "exec789",
+        "username": "felipe@gmail.com",
+        "password": "5678",
         "secret": "JBSWY3DPEHPK3PXR"
     }
 ]
