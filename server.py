@@ -4,6 +4,8 @@ import json
 import datetime
 #------Permitimos que no haya problemas con pip ni pyotp─────────────────────────────────────────────────
 
+recv_buffer = {}
+
 import subprocess
 import sys
 import urllib.request
@@ -72,13 +74,16 @@ def enviar_bloque(conn, lineas: list):
     enviar(conn, "FIN")
 
 def recibir(conn) -> str:
-    datos = b""
-    while not datos.endswith(b"\n"):
+    fd = conn.fileno()
+    buf = recv_buffer.get(fd, b"")
+    while b"\n" not in buf:
         fragmento = conn.recv(4096)
         if not fragmento:
             raise ConnectionError("Cliente desconectado.")
-        datos += fragmento
-    return datos.decode().strip()
+        buf += fragmento
+    linea, resto = buf.split(b"\n", 1)
+    recv_buffer[fd] = resto
+    return linea.decode().strip()
 
 def registrar_accion(cuenta, accion: str):
     """Actualiza la última acción del cliente en el estado global y en el log."""
@@ -213,8 +218,8 @@ def manejar_detalle_historial(conn, recientes):
 
 def manejar_catalogo(conn, cuenta):
     lineas = [
-        f"* {nombre}: ${info['precio']} (stock: {info['stock']})"
-        for nombre, info in catalogo.items()
+        f"[{i+1}] {nombre}: ${info['precio']} (stock: {info['stock']})"
+        for i, (nombre, info) in enumerate(catalogo.items())
     ]
     enviar_bloque(conn, lineas)
     registrar_accion(cuenta, "Consulta de catálogo")
@@ -296,7 +301,7 @@ def manejar_devolucion(conn, cuenta):
 
 
 def manejar_confirmar_envio(conn, cuenta):
-    historial = cuenta.get("historial", [])
+    historial = cuenta.get("history", [])
     enviados  = [op for op in historial if op["status"] == "Enviado"]
 
     if not enviados:
@@ -395,14 +400,14 @@ def manejar_chat_con_ejecutivo(conn_cliente, conn_ejecutivo, cuenta_cliente, nom
                     continue
 
                 nueva_op = {
-                    "id":        len(cuenta_cliente.get("historial", [])) + 1,
+                    "id":        len(cuenta_cliente.get("history", [])) + 1,
                     "type":      "venta",
                     "date":     datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
                     "items": [{"nombre": carta.strip(), "cantidad": 1}],
                     "status":    "Pagado",
                     "precio":    precio
                 }
-                cuenta_cliente.setdefault("historial", []).append(nueva_op)
+                cuenta_cliente.setdefault("history", []).append(nueva_op)
                 enviar(conn_ejecutivo, f"Compra registrada: {carta.strip()} por ${precio}.")
                 enviar(conn_cliente,   f"El ejecutivo ha comprado tu carta: {carta.strip()} por ${precio}.")
                 escribir_log(f"Ejecutivo {nombre_ejecutivo} compró {carta.strip()} a {nombre_cliente} por ${precio}.")
@@ -520,7 +525,7 @@ def manejar_ejecutivo(conn, ejecutivo):
                 if not cliente_actual:
                     enviar_bloque(conn, ["No estás atendiendo a ningún cliente."])
                     continue
-                historial = cliente_actual.get("historial", [])
+                historial = cliente_actual.get("history", [])
                 if not historial:
                     enviar_bloque(conn, ["El cliente no tiene operaciones registradas."])
                 else:

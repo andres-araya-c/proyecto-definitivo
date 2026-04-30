@@ -14,6 +14,42 @@
                         "qty": 10
                     }
                 ],
+                "status": "Devolución tramitada"
+            },
+            {
+                "id": 2,
+                "type": "compra",
+                "date": "30/04/2026 11:48",
+                "items": [
+                    {
+                        "name": "Osama Bin Laden: The Suspected Ringleader",
+                        "qty": 1
+                    }
+                ],
+                "status": "Devolución tramitada"
+            },
+            {
+                "id": 3,
+                "type": "compra",
+                "date": "30/04/2026 12:11",
+                "items": [
+                    {
+                        "name": "Osama Bin Laden: The Suspected Ringleader",
+                        "qty": 1
+                    }
+                ],
+                "status": "Pagado"
+            },
+            {
+                "id": 4,
+                "type": "compra",
+                "date": "30/04/2026 12:14",
+                "items": [
+                    {
+                        "name": "Osama Bin Laden: The Suspected Ringleader",
+                        "qty": 2
+                    }
+                ],
                 "status": "Pagado"
             }
         ]

@@ -98,3 +98,57 @@
 [30/04/2026 10:07:39] Compra de 10x Osama Bin Laden: The Suspected Ringleader - Cliente Osama.
 [30/04/2026 10:07:42] Consulta de historial - Cliente Osama.
 [30/04/2026 10:07:47] Cliente Osama desconectado abruptamente.
+[30/04/2026 11:33:03] Escuchando en 127.0.0.1:8002...
+[30/04/2026 11:33:26] Cliente Osama conectado.
+[30/04/2026 11:33:30] Consulta de historial - Cliente Osama.
+[30/04/2026 11:33:34] Devolución Cliente Osama.
+[30/04/2026 11:33:34] Solicitud de devolución - Cliente Osama.
+[30/04/2026 11:33:38] Consulta de historial - Cliente Osama.
+[30/04/2026 11:35:35] Cliente Osama desconectado abruptamente.
+[30/04/2026 11:36:07] Cliente Osama conectado.
+[30/04/2026 11:40:35] Cliente Osama desconectado abruptamente.
+[30/04/2026 11:40:48] Cliente Osama conectado.
+[30/04/2026 11:41:50] Cliente Osama desconectado abruptamente.
+[30/04/2026 11:42:11] Cliente Osama conectado.
+[30/04/2026 11:42:21] Cliente Osama desconectado abruptamente.
+[30/04/2026 11:45:43] Cliente Osama conectado.
+[30/04/2026 11:48:38] Consulta de catálogo - Cliente Osama.
+[30/04/2026 11:48:53] Compra Cliente Osama: 1x Osama Bin Laden: The Suspected Ringleader.
+[30/04/2026 11:48:53] Compra de 1x Osama Bin Laden: The Suspected Ringleader - Cliente Osama.
+[30/04/2026 11:48:56] Consulta de historial - Cliente Osama.
+[30/04/2026 11:50:06] Cliente Osama desconectado abruptamente.
+[30/04/2026 11:50:09] Escuchando en 127.0.0.1:8002...
+[30/04/2026 11:50:51] Cliente Osama conectado.
+[30/04/2026 11:50:53] Consulta de historial - Cliente Osama.
+[30/04/2026 11:56:24] Cliente Osama desconectado abruptamente.
+[30/04/2026 11:56:41] Escuchando en 127.0.0.1:8002...
+[30/04/2026 11:57:43] Cliente Osama conectado.
+[30/04/2026 11:57:46] Consulta de historial - Cliente Osama.
+[30/04/2026 11:58:50] Ejecutivo Andrés conectado.
+[30/04/2026 12:02:27] Cliente Osama desconectado abruptamente.
+[30/04/2026 12:02:43] Cliente Osama conectado.
+[30/04/2026 12:02:46] Consulta de historial - Cliente Osama.
+[30/04/2026 12:03:15] Consulta de historial - Cliente Osama.
+[30/04/2026 12:03:18] Devolución Cliente Osama.
+[30/04/2026 12:03:18] Solicitud de devolución - Cliente Osama.
+[30/04/2026 12:03:25] Consulta de historial - Cliente Osama.
+[30/04/2026 12:03:36] Consulta de historial - Cliente Osama.
+[30/04/2026 12:04:01] Consulta de catálogo - Cliente Osama.
+[30/04/2026 12:07:36] Cliente Osama desconectado abruptamente.
+[30/04/2026 12:07:38] Escuchando en 127.0.0.1:8002...
+[30/04/2026 12:08:15] Cliente Osama conectado.
+[30/04/2026 12:08:20] Consulta de catálogo - Cliente Osama.
+[30/04/2026 12:10:45] Escuchando en 127.0.0.1:8002...
+[30/04/2026 12:11:08] Cliente Osama conectado.
+[30/04/2026 12:11:17] Consulta de historial - Cliente Osama.
+[30/04/2026 12:11:23] Consulta de catálogo - Cliente Osama.
+[30/04/2026 12:11:33] Compra Cliente Osama: 1x Osama Bin Laden: The Suspected Ringleader.
+[30/04/2026 12:11:33] Compra de 1x Osama Bin Laden: The Suspected Ringleader - Cliente Osama.
+[30/04/2026 12:11:44] Cliente Osama desconectado abruptamente.
+[30/04/2026 12:13:41] Escuchando en 127.0.0.1:8002...
+[30/04/2026 12:14:01] Cliente Osama conectado.
+[30/04/2026 12:14:02] Consulta de catálogo - Cliente Osama.
+[30/04/2026 12:14:32] Compra Cliente Osama: 2x Osama Bin Laden: The Suspected Ringleader.
+[30/04/2026 12:14:32] Compra de 2x Osama Bin Laden: The Suspected Ringleader - Cliente Osama.
+[30/04/2026 12:14:35] Consulta de catálogo - Cliente Osama.
+[30/04/2026 12:15:19] Cliente Osama desconectado abruptamente.

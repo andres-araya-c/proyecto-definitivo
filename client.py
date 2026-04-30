@@ -1,18 +1,23 @@
 import socket
 
+recv_buffer = {}
+
 # ── Helpers de comunicación ──────────────────────────────────────────────
 
 def enviar(sock, msg: str):
     sock.sendall((msg + "\n").encode())
 
 def recibir(sock) -> str:
-    datos = b""
-    while not datos.endswith(b"\n"):
+    fd = sock.fileno()
+    buf = recv_buffer.get(fd, b"")
+    while b"\n" not in buf:
         fragmento = sock.recv(4096)
         if not fragmento:
             raise ConnectionError("Servidor desconectado.")
-        datos += fragmento
-    return datos.decode().strip()
+        buf += fragmento
+    linea, resto = buf.split(b"\n", 1)
+    recv_buffer[fd] = resto
+    return linea.decode().strip()
 
 def recibir_bloque(sock) -> str:
     lineas = []
@@ -64,14 +69,79 @@ def menu_historial(sock, usuario):
 
 def menu_catalogo(sock, usuario):
     enviar(sock, "VER_CATALOGO")
-    print(f"Asistente: Catálogo disponible:\n{recibir_bloque(sock)}")
-    producto = input("Ingrese el nombre del producto a comprar (0 = Cancelar): ").strip()
-    if producto == "0":
-        enviar(sock, "COMPRA_CANCELADA")
+    bloque = recibir_bloque(sock)
+    print(f"Asistente: Catálogo disponible:\n{bloque}")
+
+    # Parse catalog into list of (num, name, price, stock)
+    catalog_list = []
+    for line in bloque.splitlines():
+        if line.startswith('[') and ']' in line:
+            num_str = line[1:line.index(']')].strip()
+            if num_str.isdigit():
+                num = int(num_str)
+                rest = line[line.index(']')+1:].strip()
+                if ': $' in rest:
+                    name, rest2 = rest.split(': $', 1)
+                    if ' (stock: ' in rest2:
+                        price_str, stock_str = rest2.split(' (stock: ', 1)
+                        stock_str = stock_str.rstrip(')')
+                        try:
+                            price = float(price_str)
+                            stock = int(stock_str)
+                            catalog_list.append((num, name.strip(), price, stock))
+                        except ValueError:
+                            pass
+
+    while True:
+        input_str = input("Ingrese el nombre del producto, número o palabra clave (0 = Cancelar): ").strip()
+        if input_str == "0":
+            enviar(sock, "COMPRA_CANCELADA")
+            return
+
+        producto = None
+        if input_str.isdigit():
+            num = int(input_str)
+            if 1 <= num <= len(catalog_list):
+                producto = catalog_list[num-1][1]
+            else:
+                print("Asistente: Número inválido.")
+                continue
+        else:
+            # Search for matches
+            matches = [item for item in catalog_list if input_str.lower() in item[1].lower()]
+            if not matches:
+                print("Asistente: No se encontraron cartas con esa palabra.")
+                continue
+            if len(matches) == 1:
+                producto = matches[0][1]
+            else:
+                print("Asistente: Múltiples coincidencias:")
+                for num, name, price, stock in matches:
+                    print(f"[{num}] {name}: ${price} (stock: {stock})")
+                choice = input("Seleccione el número: ").strip()
+                if choice.isdigit():
+                    choice_num = int(choice)
+                    match = next((m for m in matches if m[0] == choice_num), None)
+                    if match:
+                        producto = match[1]
+                    else:
+                        print("Asistente: Selección inválida.")
+                        continue
+                else:
+                    print("Asistente: Selección inválida.")
+                    continue
+
+        # Now have producto, ask for cantidad
+        cantidad_str = input("Ingrese la cantidad: ").strip()
+        try:
+            cantidad = int(cantidad_str)
+        except ValueError:
+            print("Asistente: Cantidad inválida.")
+            continue
+
+        enviar(sock, f"COMPRAR {producto} {cantidad}")
+        print(f"Asistente: {recibir(sock)}")
         return
-    cantidad = input("Ingrese la cantidad: ").strip()
-    enviar(sock, f"COMPRAR {producto} {cantidad}")
-    print(f"Asistente: {recibir(sock)}")
 
 def menu_devolucion(sock, usuario):
     enviar(sock, "DEVOLVER")
@@ -85,13 +155,32 @@ def menu_devolucion(sock, usuario):
 
 def menu_confirmar_envio(sock, usuario):
     enviar(sock, "VER_ENVIOS_PENDIENTES")
-    print(f"Asistente: Envíos pendientes:\n{recibir_bloque(sock)}")
-    opcion = input("Ingrese el número de envío a confirmar (0 = Cancelar): ").strip()
-    if opcion == "0":
+    bloque = recibir_bloque(sock)
+    print(f"Asistente: Envíos pendientes:\n{bloque}")
+
+    if bloque.strip() == "No tienes envíos pendientes de confirmación.":
         enviar(sock, "CONFIRMACION_CANCELADA")
         return
-    enviar(sock, f"CONFIRMAR_ENVIO {opcion}")
-    print(f"Asistente: {recibir(sock)}")
+
+    opciones_validas = {"0"}
+    for linea in bloque.splitlines():
+        if linea.startswith("[") and "]" in linea:
+            opcion_num = linea[1:linea.index("]")].strip()
+            if opcion_num.isdigit():
+                opciones_validas.add(opcion_num)
+
+    while True:
+        opcion = input("Ingrese el número de envío a confirmar (0 = Cancelar): ").strip()
+        if opcion == "0":
+            enviar(sock, "CONFIRMACION_CANCELADA")
+            return
+        if opcion not in opciones_validas:
+            print("Asistente: Opción inválida. Por favor ingrese un número válido de la lista.")
+            continue
+
+        enviar(sock, f"CONFIRMAR_ENVIO {opcion}")
+        print(f"Asistente: {recibir(sock)}")
+        return
 
 def menu_ejecutivo(sock, usuario):
     enviar(sock, "SOLICITAR_EJECUTIVO")
