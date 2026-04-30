@@ -1,0 +1,46 @@
+[30/04/2026 08:37:05] Escuchando en 127.0.0.1:8002...
+[30/04/2026 08:37:36] Cliente Osama conectado.
+[30/04/2026 08:38:07] Cambio Clave Cliente Osama.
+[30/04/2026 08:38:07] Cambio de contraseña - Cliente Osama.
+[30/04/2026 08:38:33] Cambio Clave Cliente Osama.
+[30/04/2026 08:38:33] Cambio de contraseña - Cliente Osama.
+[30/04/2026 08:38:40] Consulta de historial - Cliente Osama.
+[30/04/2026 08:38:47] Cliente Osama desconectado.
+[30/04/2026 08:39:30] Cliente Osama conectado.
+[30/04/2026 08:39:35] Consulta de catálogo - Cliente Osama.
+[30/04/2026 08:40:08] Consulta de catálogo - Cliente Osama.
+[30/04/2026 08:40:27] Consulta de catálogo - Cliente Osama.
+[30/04/2026 08:40:39] Consulta de catálogo - Cliente Osama.
+[30/04/2026 08:41:26] Consulta de catálogo - Cliente Osama.
+[30/04/2026 08:46:00] Consulta de catálogo - Cliente Osama.
+[30/04/2026 08:51:43] Cliente Osama desconectado.
+[30/04/2026 08:52:20] Escuchando en 127.0.0.1:8002...
+[30/04/2026 08:52:55] Cliente Osama conectado.
+[30/04/2026 08:52:58] Consulta de catálogo - Cliente Osama.
+[30/04/2026 08:53:21] Compra Cliente Osama: 10x Osama Bin Laden: The Suspected Ringleader.
+[30/04/2026 08:53:21] Compra de 10x Osama Bin Laden: The Suspected Ringleader - Cliente Osama.
+[30/04/2026 08:53:27] Consulta de catálogo - Cliente Osama.
+[30/04/2026 08:55:59] Consulta de historial - Cliente Osama.
+[30/04/2026 08:56:12] Consulta de catálogo - Cliente Osama.
+[30/04/2026 08:57:00] Consulta de historial - Cliente Osama.
+[30/04/2026 08:57:07] Cliente Osama desconectado.
+[30/04/2026 08:57:32] Cliente Osama conectado.
+[30/04/2026 08:57:37] Consulta de historial - Cliente Osama.
+[30/04/2026 08:58:04] Consulta de catálogo - Cliente Osama.
+[30/04/2026 08:58:33] Compra Cliente Osama: 10x An Attack On Freedom.
+[30/04/2026 08:58:33] Compra de 10x An Attack On Freedom - Cliente Osama.
+[30/04/2026 08:58:39] Consulta de historial - Cliente Osama.
+[30/04/2026 08:58:52] Consulta de historial - Cliente Osama.
+[30/04/2026 09:01:10] Consulta de historial - Cliente Osama.
+[30/04/2026 09:01:29] Consulta de historial - Cliente Osama.
+[30/04/2026 09:01:38] Consulta de historial - Cliente Osama.
+[30/04/2026 09:08:41] Ejecutivo Andrés conectado.
+[30/04/2026 09:12:09] Ejecutivo Andrés desconectado abruptamente.
+[30/04/2026 09:13:14] Ejecutivo Andrés conectado.
+[30/04/2026 09:17:56] Ejecutivo Andrés desconectado.
+[30/04/2026 09:19:30] Ejecutivo Andrés conectado.
+[30/04/2026 09:20:15] Ejecutivo Andrés desconectado abruptamente.
+[30/04/2026 09:21:03] Ejecutivo Andrés conectado.
+[30/04/2026 09:28:46] Ejecutivo Andrés desconectado abruptamente.
+[30/04/2026 09:28:46] Cliente Osama desconectado abruptamente.
+[30/04/2026 09:35:44] Escuchando en 127.0.0.1:8002...

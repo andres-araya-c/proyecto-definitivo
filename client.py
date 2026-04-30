@@ -18,7 +18,7 @@ def recibir_bloque(sock) -> str:
     lineas = []
     while True:
         linea = recibir(sock)
-        if linea == "%%FIN%%":
+        if linea == "FIN":
             break
         lineas.append(linea)
     return "\n".join(lineas)
@@ -60,8 +60,7 @@ def menu_historial(sock, usuario):
     print(f"Asistente:\n{recibir_bloque(sock)}")
     opcion = input("¿Desea ver más detalles de alguno? (0 = No): ").strip()
     enviar(sock, f"DETALLE_HISTORIAL {opcion}")
-    if opcion != "0":
-        print(f"Asistente:\n{recibir_bloque(sock)}")
+    print(f"Asistente:\n{recibir_bloque(sock)}")
 
 def menu_catalogo(sock, usuario):
     enviar(sock, "VER_CATALOGO")
@@ -75,7 +74,7 @@ def menu_catalogo(sock, usuario):
     print(f"Asistente: {recibir(sock)}")
 
 def menu_devolucion(sock, usuario):
-    enviar(sock, "VER_HISTORIAL")
+    enviar(sock, "DEVOLVER")
     print(f"Asistente: Sus compras:\n{recibir_bloque(sock)}")
     opcion = input("Ingrese el número de operación a devolver (0 = Cancelar): ").strip()
     if opcion == "0":

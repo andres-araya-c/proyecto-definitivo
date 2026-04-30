@@ -21,7 +21,7 @@ def recibir_bloque(sock) -> str:
     lineas = []
     while True:
         linea = recibir(sock)
-        if linea == "%%FIN%%":
+        if linea == "FIN":
             break
         lineas.append(linea)
     return "\n".join(lineas)
@@ -53,16 +53,16 @@ def terminal_ejecutivo(sock, nombre):
     print(f"Asistente: {bienvenida}")
 
     print("\nComandos disponibles:")
-    print("  :estado               -> clientes conectados y solicitudes en cola")
-    print("  :detalles             -> clientes conectados y su ultima accion")
-    print("  :conectar             -> atender al proximo cliente en cola")
-    print("  :historial            -> historial de acciones del cliente actual")
-    print("  :operaciones          -> historial completo de compras del cliente actual")
-    print("  :catalogo             -> ver catalogo de cartas y precios")
-    print("  :comprar [carta] [precio] -> comprarle carta al cliente")
-    print("  :publicar [carta] [precio] -> poner carta a la venta")
-    print("  :desconectar          -> terminar sesion con el cliente actual")
-    print("  :salir                -> desconectarse del servidor\n")
+    print("  :status               -> clientes conectados y solicitudes en cola")
+    print("  :details            -> clientes conectados y su ultima accion")
+    print("  :connect             -> atender al proximo cliente en cola")
+    print("  :history            -> historial de acciones del cliente actual")
+    print("  :operations         -> historial completo de compras del cliente actual")
+    print("  :catalogue           -> ver catalogo de cartas y precios")
+    print("  :buy [carta] [precio] -> comprarle carta al cliente")
+    print("  :publish [carta] [precio] -> poner carta a la venta")
+    print("  :disconnect          -> terminar sesion con el cliente actual")
+    print("  :exit                -> desconectarse del servidor\n")
 
     cliente_actual = None
     fin_sesion = threading.Event()
@@ -78,7 +78,7 @@ def terminal_ejecutivo(sock, nombre):
                 elif msg.startswith("CLIENTE_ASIGNADO "):
                     cliente_actual = msg.split(" ", 1)[1]
                     print(f"\nAsistente: Ahora atiendes a {cliente_actual}.")
-                elif msg == "%%FIN%%":
+                elif msg == "FIN":
                     pass
                 else:
                     print(f"\nAsistente: {msg}")
@@ -95,61 +95,60 @@ def terminal_ejecutivo(sock, nombre):
         else:
             entrada = input(f"{nombre}: ").strip()
 
-        if entrada == ":estado":
+        if entrada == ":status":
             enviar(sock, "CMD_ESTADO")
 
-        elif entrada == ":detalles":
+        elif entrada == ":details":
             enviar(sock, "CMD_DETALLES")
 
-        elif entrada == ":conectar":
+        elif entrada == ":connect":
             enviar(sock, "CMD_CONECTAR")
 
-        elif entrada == ":historial":
+        elif entrada == ":history":
             if not cliente_actual:
                 print("Asistente: No estas atendiendo a ningun cliente.")
                 continue
             enviar(sock, "CMD_HISTORIAL")
 
-        elif entrada == ":operaciones":
+        elif entrada == ":operations":
             if not cliente_actual:
                 print("Asistente: No estas atendiendo a ningun cliente.")
                 continue
             enviar(sock, "CMD_OPERACIONES")
 
-        elif entrada == ":catalogo":
+        elif entrada == ":catalogue":
             enviar(sock, "CMD_CATALOGO")
 
-        elif entrada.startswith(":comprar "):
+        elif entrada.startswith(":buy "):
             if not cliente_actual:
                 print("Asistente: No estas atendiendo a ningun cliente.")
                 continue
-            # Formato: :comprar <nombre carta con espacios> <precio>
-            # El precio es la ultima palabra, el nombre es todo lo demas
-            resto = entrada[len(":comprar "):]
+
+            resto = entrada[len(":buy "):]
             partes = resto.rsplit(" ", 1)
             if len(partes) < 2:
-                print("Asistente: Uso correcto -> :comprar [nombre carta] [precio]")
+                print("Asistente: Uso correcto -> :buy [nombre carta] [precio]")
                 continue
             nombre_carta, precio = partes[0], partes[1]
             enviar(sock, f"CMD_COMPRAR {nombre_carta}|{precio}")
 
-        elif entrada.startswith(":publicar "):
-            resto = entrada[len(":publicar "):]
+        elif entrada.startswith(":publish "):
+            resto = entrada[len(":publish "):]
             partes = resto.rsplit(" ", 1)
             if len(partes) < 2:
-                print("Asistente: Uso correcto -> :publicar [nombre carta] [precio]")
+                print("Asistente: Uso correcto -> :publish  [nombre carta] [precio]")
                 continue
             nombre_carta, precio = partes[0], partes[1]
             enviar(sock, f"CMD_PUBLICAR {nombre_carta}|{precio}")
 
-        elif entrada == ":desconectar":
+        elif entrada == ":disconnect":
             if not cliente_actual:
                 print("Asistente: No estas atendiendo a ningun cliente.")
                 continue
             enviar(sock, "CMD_DESCONECTAR")
             cliente_actual = None
 
-        elif entrada == ":salir":
+        elif entrada == ":exit":
             enviar(sock, "CMD_SALIR")
             fin_sesion.set()
             print("Asistente: Hasta luego!")

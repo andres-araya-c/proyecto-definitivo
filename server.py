@@ -2,7 +2,24 @@ import socket
 import threading
 import json
 import datetime
-import pyotp
+#------Permitimos que no haya problemas con pip ni pyotp─────────────────────────────────────────────────
+
+import subprocess
+import sys
+import urllib.request
+import os
+
+try:
+    import pyotp
+except ImportError:
+    pip_path = os.path.join(os.path.dirname(sys.executable), "Scripts", "pip.exe")
+    if not os.path.exists(pip_path):
+        installer = os.path.join(os.path.dirname(__file__), "get-pip.py")
+        urllib.request.urlretrieve("https://bootstrap.pypa.io/get-pip.py", installer)
+        subprocess.check_call([sys.executable, installer])
+        os.remove(installer)
+    subprocess.check_call([pip_path, "install", "pyotp"])
+    import pyotp
 
 # ── Cargar base de datos ─────────────────────────────────────────────────
 
@@ -52,7 +69,7 @@ def enviar(conn, msg: str):
 def enviar_bloque(conn, lineas: list):
     for linea in lineas:
         enviar(conn, linea)
-    enviar(conn, "%%FIN%%")
+    enviar(conn, "FIN")
 
 def recibir(conn) -> str:
     datos = b""
@@ -207,14 +224,16 @@ def manejar_catalogo(conn, cuenta):
     if msg == "COMPRA_CANCELADA":
         return
 
-    partes = msg.split(" ", 2)
-    if partes[0] != "COMPRAR" or len(partes) < 3:
+    partes = msg.split(" ", 1)
+    if partes[0] != "COMPRAR" or len(partes) < 2:
         enviar(conn, "Solicitud inválida.")
         return
 
-    producto = partes[1]
+    resto = partes[1].rsplit(" ", 1)
+    producto = resto[0]
     try:
-        cantidad = int(partes[2])
+        cantidad = int(resto[1])
+
     except ValueError:
         enviar(conn, "Cantidad inválida.")
         return
@@ -228,6 +247,7 @@ def manejar_catalogo(conn, cuenta):
             return
 
         catalogo[producto]["stock"] -= cantidad
+
         nueva_op = {
             "id":        len(cuenta.get("historial", [])) + 1,
             "tipo":      "compra",

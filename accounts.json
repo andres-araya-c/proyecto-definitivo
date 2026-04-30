@@ -2,12 +2,11 @@
     {
         "name": "Osama",
         "username": "binladen@911.com",
-        "password": "akbar",
+        "password": "TTowers",
         "secret": "YI2MJ2YD7WHW3JJ5WBZDVY4FBSJVLUSG",
         "history": []
     },
-    
-{
+    {
         "name": "Abigail",
         "username": "abi@gmail.com",
         "password": "1234",
@@ -35,7 +34,6 @@
             }
         ]
     },
-    
     {
         "name": "Else",
         "username": "test2@example.com",
@@ -52,7 +50,6 @@
             {
                 "id": 1,
                 "type": "compra",
-    
                 "date": "02/05/2011 1:00",
                 "items": [
                     {
