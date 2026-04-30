@@ -131,7 +131,6 @@ def menu_catalogo(sock, usuario):
                     print("Asistente: Selección inválida.")
                     continue
 
-        # Now have producto, ask for cantidad
         cantidad_str = input("Ingrese la cantidad: ").strip()
         try:
             cantidad = int(cantidad_str)
