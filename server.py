@@ -172,18 +172,17 @@ def manejar_cambio_clave(conn, cuenta, nueva_clave):
 
 
 def manejar_ver_historial(conn, cuenta):
-    historial   = cuenta.get("historial", [])
+    historial   = cuenta.get("history", [])
     hace_un_año = datetime.datetime.now() - datetime.timedelta(days=365)
 
     recientes = [
         op for op in historial
-        if datetime.datetime.strptime(op["fecha"], "%d/%m/%Y %H:%M") >= hace_un_año
-    ]
+        if datetime.datetime.strptime(op["date"], "%d/%m/%Y %H:%M") >= hace_un_año    ]
 
     if not recientes:
         enviar_bloque(conn, ["No tienes operaciones en el último año."])
     else:
-        lineas = [f"[{i+1}] {op['tipo']} ({op['fecha']})" for i, op in enumerate(recientes)]
+        lineas = [f"[{i+1}] {op['type']} ({op['date']})" for i, op in enumerate(recientes)]
         enviar_bloque(conn, lineas)
 
     registrar_accion(cuenta, "Consulta de historial")
@@ -205,10 +204,10 @@ def manejar_detalle_historial(conn, recientes):
         enviar_bloque(conn, ["Operación inválida."])
         return
 
-    lineas = [f"[{idx+1}] {op['tipo']} ({op['fecha']})"]
-    for articulo in op.get("articulos", []):
-        lineas.append(f"* {articulo['nombre']} [x{articulo['cantidad']}]")
-    lineas.append(f"Estado: {op['estado']}")
+    lineas = [f"[{idx+1}] {op['type']} ({op['date']})"]
+    for articulo in op.get("items", []):
+        lineas.append(f"* {articulo['name']} [x{articulo['qty']}]")
+    lineas.append(f"Estado: {op['status']}")
     enviar_bloque(conn, lineas)
 
 
@@ -249,13 +248,15 @@ def manejar_catalogo(conn, cuenta):
         catalogo[producto]["stock"] -= cantidad
 
         nueva_op = {
-            "id":        len(cuenta.get("historial", [])) + 1,
-            "tipo":      "compra",
-            "fecha":     datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
-            "articulos": [{"nombre": producto, "cantidad": cantidad}],
-            "estado":    "Pagado"
+            "id":     len(cuenta.get("history", [])) + 1,
+            "type":   "compra",
+            "date":   datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
+            "items":  [{"name": producto, "qty": cantidad}],
+        "status": "Pagado"
         }
-        cuenta.setdefault("historial", []).append(nueva_op)
+        cuenta.setdefault("history", []).append(nueva_op)
+        with open("accounts.json", "w", encoding="utf-8") as f:
+            json.dump(cuentas, f, indent=4, ensure_ascii=False)
 
     enviar(conn, f"Compra exitosa: {cantidad}x {producto}. ¡Gracias!")
     escribir_log(f"Compra Cliente {cuenta['name']}: {cantidad}x {producto}.")
@@ -276,15 +277,18 @@ def manejar_devolucion(conn, cuenta):
         enviar(conn, "Operación inválida.")
         return
 
-    if op["estado"] not in ("Pagado", "Enviado", "Recibido"):
+    if op["status"] not in ("Pagado", "Enviado", "Recibido"):
         enviar(conn, "Esta operación no puede ser devuelta.")
         return
-
     with lock_stock:
-        for articulo in op.get("articulos", []):
-            if articulo["nombre"] in catalogo:
-                catalogo[articulo["nombre"]]["stock"] += articulo["cantidad"]
-        op["estado"] = "Devolución tramitada"
+        for articulo in op.get("items", []):
+            if articulo["name"] in catalogo:
+                catalogo[articulo["name"]]["stock"] += articulo["qty"]
+        op["status"] = "Devolución tramitada"
+
+   
+    with open("accounts.json", "w", encoding="utf-8") as f:
+        json.dump(cuentas, f, indent=4, ensure_ascii=False)
 
     enviar(conn, "Devolución solicitada exitosamente.")
     escribir_log(f"Devolución Cliente {cuenta['name']}.")
@@ -293,7 +297,7 @@ def manejar_devolucion(conn, cuenta):
 
 def manejar_confirmar_envio(conn, cuenta):
     historial = cuenta.get("historial", [])
-    enviados  = [op for op in historial if op["estado"] == "Enviado"]
+    enviados  = [op for op in historial if op["status"] == "Enviado"]
 
     if not enviados:
         enviar_bloque(conn, ["No tienes envíos pendientes de confirmación."])
@@ -313,7 +317,7 @@ def manejar_confirmar_envio(conn, cuenta):
 
     try:
         idx = int(msg.split()[1]) - 1
-        enviados[idx]["estado"] = "Recibido"
+        enviados[idx]["status"] = "Recibido"
         enviar(conn, "Envío confirmado. ¡Gracias!")
         escribir_log(f"Confirmación envío Cliente {cuenta['name']}.")
         registrar_accion(cuenta, "Confirmación de envío")
@@ -392,10 +396,10 @@ def manejar_chat_con_ejecutivo(conn_cliente, conn_ejecutivo, cuenta_cliente, nom
 
                 nueva_op = {
                     "id":        len(cuenta_cliente.get("historial", [])) + 1,
-                    "tipo":      "venta",
-                    "fecha":     datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
-                    "articulos": [{"nombre": carta.strip(), "cantidad": 1}],
-                    "estado":    "Pagado",
+                    "type":      "venta",
+                    "date":     datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
+                    "items": [{"nombre": carta.strip(), "cantidad": 1}],
+                    "status":    "Pagado",
                     "precio":    precio
                 }
                 cuenta_cliente.setdefault("historial", []).append(nueva_op)
@@ -522,7 +526,7 @@ def manejar_ejecutivo(conn, ejecutivo):
                 else:
                     lineas = []
                     for i, op in enumerate(historial):
-                        lineas.append(f"[{i+1}] {op['tipo']} ({op['fecha']}) - Estado: {op['estado']}")
+                        lineas.append(f"[{i+1}] {op['tipo']} ({op['fecha']}) - Estado: {op['status']}")
                         for art in op.get("articulos", []):
                             lineas.append(f"    * {art['nombre']} [x{art['cantidad']}]")
                     enviar_bloque(conn, lineas)

@@ -2,15 +2,26 @@
     {
         "name": "Osama",
         "username": "binladen@911.com",
-        "password": "TTowers",
-        "secret": "YI2MJ2YD7WHW3JJ5WBZDVY4FBSJVLUSG",
-        "history": []
+        "password": "PokerFace",
+        "history": [
+            {
+                "id": 1,
+                "type": "compra",
+                "date": "30/04/2026 10:07",
+                "items": [
+                    {
+                        "name": "Osama Bin Laden: The Suspected Ringleader",
+                        "qty": 10
+                    }
+                ],
+                "status": "Pagado"
+            }
+        ]
     },
     {
         "name": "Abigail",
         "username": "abi@gmail.com",
         "password": "1234",
-        "secret": "PCMXHIT4YIECSGJ4WOE4LGRY3FQYFFTJ",
         "history": [
             {
                 "id": 1,
@@ -35,17 +46,15 @@
         ]
     },
     {
-        "name": "Else",
+        "name": "Epstein",
         "username": "test2@example.com",
         "password": "123pswrd",
-        "secret": "YY4VBMLQBOMCDUGCEZ7XWTQ5DOULR34E",
         "history": []
     },
     {
         "name": "Lucas",
         "username": "lukrak69@example.com",
         "password": "1234",
-        "secret": "HFMQMGIUVAEIWU6UFXD7LEX7JLSKQETA",
         "history": [
             {
                 "id": 1,
