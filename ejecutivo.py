@@ -166,14 +166,15 @@ def terminal_ejecutivo(sock, nombre):
             enviar(sock, "CMD_DESCONECTAR")
             cliente_actual = None
 
+        
+        elif cliente_actual and not entrada.startswith(":"):
+            enviar(sock, f"CHAT_EJECUTIVO {entrada}")
+
         elif entrada == ":exit":
             enviar(sock, "CMD_SALIR")
             fin_sesion.set()
             print("Asistente: Hasta luego!")
             break
-
-        elif cliente_actual and not entrada.startswith(":"):
-            enviar(sock, f"CHAT_EJECUTIVO {entrada}")
 
         else:
             print("Asistente: Comando no reconocido.")

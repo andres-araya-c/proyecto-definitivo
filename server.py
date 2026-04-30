@@ -257,7 +257,7 @@ def manejar_catalogo(conn, cuenta):
             "type":   "compra",
             "date":   datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
             "items":  [{"name": producto, "qty": cantidad}],
-        "status": "Pagado"
+            "status": "No enviado"
         }
         cuenta.setdefault("history", []).append(nueva_op)
         with open("accounts.json", "w", encoding="utf-8") as f:
@@ -282,7 +282,7 @@ def manejar_devolucion(conn, cuenta):
         enviar(conn, "Operación inválida.")
         return
 
-    if op["status"] not in ("Pagado", "Enviado", "Recibido"):
+    if op["status"] not in ("No enviado", "Pagado", "Enviado", "Recibido"):
         enviar(conn, "Esta operación no puede ser devuelta.")
         return
     with lock_stock:
@@ -302,18 +302,21 @@ def manejar_devolucion(conn, cuenta):
 
 def manejar_confirmar_envio(conn, cuenta):
     historial = cuenta.get("history", [])
-    enviados  = [op for op in historial if op["status"] == "Enviado"]
+    pendientes = [op for op in historial if op.get("status") == "No enviado"]
 
-    if not enviados:
+    if not pendientes:
         enviar_bloque(conn, ["No tienes envíos pendientes de confirmación."])
         recibir(conn)
         return
 
-    lineas = [
-        f"[{i+1}] {op['tipo']} ({op['fecha']}) - "
-        + ", ".join(a["nombre"] for a in op.get("articulos", []))
-        for i, op in enumerate(enviados)
-    ]
+    lineas = []
+    for i, op in enumerate(pendientes):
+        descripcion = op.get("tipo") or op.get("type") or "envío"
+        fecha = op.get("fecha") or op.get("date") or "fecha desconocida"
+        articulos = op.get("articulos") or op.get("items") or []
+        nombres = [a.get("nombre") or a.get("name") or "artículo" for a in articulos]
+        lineas.append(f"[{i+1}] {descripcion} ({fecha}) - {', '.join(nombres)}")
+
     enviar_bloque(conn, lineas)
 
     msg = recibir(conn)
@@ -322,8 +325,8 @@ def manejar_confirmar_envio(conn, cuenta):
 
     try:
         idx = int(msg.split()[1]) - 1
-        enviados[idx]["status"] = "Recibido"
-        enviar(conn, "Envío confirmado. ¡Gracias!")
+        pendientes[idx]["status"] = "Enviado"
+        enviar(conn, "Envío confirmado. El pedido ha sido marcado como enviado.")
         escribir_log(f"Confirmación envío Cliente {cuenta['name']}.")
         registrar_accion(cuenta, "Confirmación de envío")
     except (ValueError, IndexError):
@@ -404,7 +407,7 @@ def manejar_chat_con_ejecutivo(conn_cliente, conn_ejecutivo, cuenta_cliente, nom
                     "type":      "venta",
                     "date":     datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
                     "items": [{"nombre": carta.strip(), "cantidad": 1}],
-                    "status":    "Pagado",
+                    "status":    "No enviado",
                     "precio":    precio
                 }
                 cuenta_cliente.setdefault("history", []).append(nueva_op)

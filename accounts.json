@@ -51,6 +51,54 @@
                     }
                 ],
                 "status": "Pagado"
+            },
+            {
+                "id": 5,
+                "type": "compra",
+                "date": "30/04/2026 17:28",
+                "items": [
+                    {
+                        "name": "Osama Bin Laden: The Suspected Ringleader",
+                        "qty": 5
+                    }
+                ],
+                "status": "Pagado"
+            },
+            {
+                "id": 6,
+                "type": "compra",
+                "date": "30/04/2026 17:36",
+                "items": [
+                    {
+                        "name": "Osama Bin Laden: The Suspected Ringleader",
+                        "qty": 3
+                    }
+                ],
+                "status": "Pagado"
+            },
+            {
+                "id": 7,
+                "type": "compra",
+                "date": "30/04/2026 17:37",
+                "items": [
+                    {
+                        "name": "Osama Bin Laden: The Suspected Ringleader",
+                        "qty": 10
+                    }
+                ],
+                "status": "Pagado"
+            },
+            {
+                "id": 8,
+                "type": "compra",
+                "date": "30/04/2026 17:42",
+                "items": [
+                    {
+                        "name": "Osama Bin Laden: The Suspected Ringleader",
+                        "qty": 2
+                    }
+                ],
+                "status": "No enviado"
             }
         ]
     },
@@ -78,6 +126,31 @@
                     }
                 ],
                 "status": "Enviado"
+            },
+            {
+                "id": 2,
+                "type": "venta",
+                "date": "30/04/2026 16:43",
+                "items": [
+                    {
+                        "nombre": "Osama Bin Laden: The Suspected Ringleader",
+                        "cantidad": 1
+                    }
+                ],
+                "status": "Pagado",
+                "precio": 2.0
+            },
+            {
+                "id": 3,
+                "type": "compra",
+                "date": "30/04/2026 17:20",
+                "items": [
+                    {
+                        "name": "USS Kitty Hawk Leaves Japanese Waters",
+                        "qty": 1
+                    }
+                ],
+                "status": "Pagado"
             }
         ]
     },

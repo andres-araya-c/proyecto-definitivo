@@ -162,11 +162,11 @@ def menu_confirmar_envio(sock, usuario):
         return
 
     opciones_validas = {"0"}
-    for linea in bloque.splitlines():
-        if linea.startswith("[") and "]" in linea:
-            opcion_num = linea[1:linea.index("]")].strip()
-            if opcion_num.isdigit():
-                opciones_validas.add(opcion_num)
+    lineas = [linea for linea in bloque.splitlines() if linea.startswith("[") and "]" in linea]
+    for linea in lineas:
+        opcion_num = linea[1:linea.index("]")].strip()
+        if opcion_num.isdigit():
+            opciones_validas.add(opcion_num)
 
     while True:
         opcion = input("Ingrese el número de envío a confirmar (0 = Cancelar): ").strip()
@@ -177,9 +177,21 @@ def menu_confirmar_envio(sock, usuario):
             print("Asistente: Opción inválida. Por favor ingrese un número válido de la lista.")
             continue
 
-        enviar(sock, f"CONFIRMAR_ENVIO {opcion}")
-        print(f"Asistente: {recibir(sock)}")
-        return
+        seleccion = next((linea for linea in lineas if linea.startswith(f"[{opcion}]")), None)
+        if seleccion:
+            print(f"Asistente: Confirmar el envío de este pedido:\n{seleccion}")
+
+        while True:
+            confirmacion = input("¿Desea marcar este pedido como enviado? (s/n): ").strip().lower()
+            if confirmacion in {"s", "si"}:
+                enviar(sock, f"CONFIRMAR_ENVIO {opcion}")
+                print(f"Asistente: {recibir(sock)}")
+                return
+            if confirmacion in {"n", "no"}:
+                enviar(sock, "CONFIRMACION_CANCELADA")
+                print("Asistente: Confirmación cancelada.")
+                return
+            print("Asistente: Respuesta inválida. Ingrese 's' para sí o 'n' para no.")
 
 def menu_ejecutivo(sock, usuario):
     enviar(sock, "SOLICITAR_EJECUTIVO")
