@@ -1,6 +1,24 @@
 import socket
 import threading
-import pyotp
+#_________________________
+recv_buffer = {}
+
+import subprocess
+import sys
+import urllib.request
+import os
+
+try:
+    import pyotp
+except ImportError:
+    pip_path = os.path.join(os.path.dirname(sys.executable), "Scripts", "pip.exe")
+    if not os.path.exists(pip_path):
+        installer = os.path.join(os.path.dirname(__file__), "get-pip.py")
+        urllib.request.urlretrieve("https://bootstrap.pypa.io/get-pip.py", installer)
+        subprocess.check_call([sys.executable, installer])
+        os.remove(installer)
+    subprocess.check_call([pip_path, "install", "pyotp"])
+    import pyotp
 import json
 
 # ── Helpers de comunicación ──────────────────────────────────────────────
