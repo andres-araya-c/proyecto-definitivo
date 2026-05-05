@@ -9,7 +9,20 @@
         "name": "Abigail",
         "username": "abi@gmail.com",
         "password": "1234",
-        "history": []
+        "history": [
+            {
+                "id": 1,
+                "type": "compra",
+                "date": "05/05/2026 13:07",
+                "items": [
+                    {
+                        "name": "Osama Bin Laden: The Suspected Ringleader",
+                        "qty": 10
+                    }
+                ],
+                "status": "No enviado"
+            }
+        ]
     },
     {
         "name": "Diego",

@@ -1,0 +1,8 @@
+[05/05/2026 13:05:12] Escuchando en 127.0.0.1:8002...
+[05/05/2026 13:06:14] Cliente Abigail conectado.
+[05/05/2026 13:06:42] Cliente Osama conectado.
+[05/05/2026 13:07:04] Consulta de catálogo - Cliente Osama.
+[05/05/2026 13:07:04] Consulta de catálogo - Cliente Abigail.
+[05/05/2026 13:07:27] Compra Cliente Abigail: 10x Osama Bin Laden: The Suspected Ringleader.
+[05/05/2026 13:07:27] Compra de 10x Osama Bin Laden: The Suspected Ringleader - Cliente Abigail.
+[05/05/2026 13:09:43] Ejecutivo Andrés conectado.

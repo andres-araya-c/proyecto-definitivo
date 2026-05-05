@@ -1,10 +1,11 @@
 # Documentación del Proyecto TC5G
 
-Esta documentación integra los tres archivos principales del proyecto:
+Esta documentación integra los principales archivos del proyecto:
 
 - `server.py`
 - `client.py`
 - `ejecutivo.py`
+- `multicliente.py`
 
 Incluye descripción de la arquitectura, el protocolo de comunicación y los comandos admitidos.
 
@@ -15,6 +16,7 @@ Incluye descripción de la arquitectura, el protocolo de comunicación y los com
 - `server.py` — servidor principal
 - `client.py` — interfaz para clientes finales que usan el servicio.
 - `ejecutivo.py` — interfaz para ejecutivos que atienden a clientes mediante chat y comandos administrativos.
+- `multicliente.py` — lanzador de múltiples instancias de clientes simultáneos
 - `accounts.json` — base de datos de clientes
 - `ejecutivos.json` — base de datos de ejecutivos y secretos 2FA
 - `Cartas.json` — datos del catálogo de productos
@@ -276,6 +278,81 @@ Comandos disponibles:
 - `CLIENTE_ASIGNADO <nombre>` indica el cliente atendido.
 - Mientras hay cliente, los mensajes sin `:` se envían al cliente.
 - Los comandos que comienzan con `:` se interpretan localmente.
+
+---
+
+# 4. `multicliente.py`
+
+## Visión general
+
+`multicliente.py` es un lanzador que permite ejecutar múltiples instancias de `client.py` simultáneamente desde una única interfaz. Facilita pruebas concurrentes, demostraciones o simulaciones del sistema con varios clientes.
+
+## Ejecución
+
+```powershell
+python multicliente.py
+```
+
+### Solicitud de clientes
+
+Al ejecutarse, solicita la cantidad de clientes a lanzar:
+
+```
+¿Cuántos clientes desea lanzar? <número>
+```
+
+Ingrese un número entero mayor a 0. El programa lanzará esa cantidad de procesos independientes de `client.py`.
+
+## Interfaz de control
+
+Una vez lanzados los clientes, aparece un menú con las opciones:
+
+### Enviar comandos a un cliente específico
+
+```
+<número>:<comando>
+```
+
+Ejemplo:
+```
+1:COMPRAR Carta1 2
+2:SOLICITAR_EJECUTIVO
+3:VER_HISTORIAL
+```
+
+### Enviar comandos a todos los clientes
+
+```
+*:<comando>
+```
+
+Ejemplo:
+```
+*:VER_CATALOGO
+*:SOLICITAR_EJECUTIVO
+```
+
+### Salir
+
+```
+q
+```
+
+Termina todos los procesos de clientes y finaliza el lanzador.
+
+## Funcionalidad técnica
+
+- **Subprocesos**: Cada cliente se ejecuta en su propio proceso independiente.
+- **Colas de entrada**: Se usa una cola thread-safe para comunicarse con cada cliente.
+- **Lectura de salida**: Los mensajes de cada cliente se capturan y se muestran prefijados con `[ClienteN]`.
+- **Codificación**: Soporta `latin-1` y UTF-8 para mayor compatibilidad.
+
+## Casos de uso
+
+- **Pruebas concurrentes**: Simular múltiples usuarios usando el sistema simultáneamente.
+- **Demostraciones**: Mostrar interacciones complejas con varios clientes al mismo tiempo.
+- **Validación de carga**: Verificar que el servidor maneja múltiples conexiones correctamente.
+- **Desarrollo y debugging**: Interactuar con múltiples clientes sin abrir múltiples terminales.
 
 ---
 
